@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold-300: #e8cf8c;
+  --color-gold-400: #d9b96a;
+  --color-gold-500: #c9a24b;
+  --color-gold-700: #8a6a26;
+  --color-panel: #0a0a0a;
+  --color-panel-2: #121110;
+  --color-line: rgb(201 162 75 / 0.26);
+
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #000;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-gold-500);
+  color: #000;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-300);
+  outline-offset: 3px;
+}
+
+/* One orchestrated moment: the hero headline rises line by line, the gold
+   rule draws, then the pass settles in. Nothing else animates on its own. */
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+@keyframes draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes settle {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.line-rise {
+  display: block;
+  animation: rise 0.95s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  animation-delay: calc(var(--i, 0) * 120ms + 80ms);
+}
+.gold-draw {
+  transform-origin: left;
+  animation: draw 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) 0.55s both;
+}
+.settle {
+  animation: settle 0.9s ease both;
+  animation-delay: var(--d, 0.8s);
+}
+
+/* Responds to the person's action: FAQ rows open and close. */
+.faq-icon {
+  transition: transform 0.2s ease;
+}
+details[open] > summary .faq-icon {
+  transform: rotate(45deg);
+}
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Legal pages */
+.legal h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+.legal p,
+.legal li {
+  color: rgb(255 255 255 / 0.78);
+  max-width: 68ch;
+}
+.legal p + p {
+  margin-top: 0.9rem;
+}
+.legal ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.75rem;
+}
+.legal li + li {
+  margin-top: 0.4rem;
+}
+.legal a {
+  color: var(--color-gold-300);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
